@@ -1,5 +1,3 @@
-<!-- لوحة تحكم لعرض وتصفح طلبات التقديم الواردة عبر النماذج المختلفة في الموقع -->
-<!-- src/views/admin/FormSubmissions.vue -->
 <template>
   <div>
     <h1 class="text-2xl font-bold mb-6 text-indigo-600">تقديم النموذج</h1>
@@ -30,7 +28,7 @@
             >
               {{ header }}
             </th>
-            <th class="px-6 py-3 ">الحدث</th>
+            <th class="px-6 py-3">الحدث</th>
           </tr>
         </thead>
         <tbody>
@@ -56,20 +54,24 @@
               >
                 عرض التفاصيل
               </button>
+              <button
+                @click="deleteSubmission(submission.id)"
+                class="text-red-600 hover:text-red-900 mr-3"
+              >
+                حذف
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <!-- Submission Detail Modal -->
+    <!-- نموذج عرض التفاصيل -->
     <Modal :isOpen="showDetailModal" @close="showDetailModal = false">
-      <template #title> Submission Details </template>
+      <template #title>تفاصيل التقديم</template>
       <div v-if="selectedSubmission" class="space-y-4">
         <div v-for="(value, key) in selectedSubmission" :key="key">
-          <label class="block text-sm font-medium text-gray-700 capitalize">{{
-            key
-          }}</label>
+          <label class="block text-sm font-medium text-gray-700 capitalize">{{ key }}</label>
           <p class="mt-1 p-2 bg-gray-50 rounded-md">{{ value }}</p>
         </div>
       </div>
@@ -79,47 +81,44 @@
 
 <script setup>
 import { ref, computed } from "vue";
-//تعديل صفحة Modal.vue هنا
 import Modal from '@/components/Modal.vue'
 
 const formTypes = ["تواصل", "متطوع", "متبرع"];
 const activeType = ref("تواصل");
 
-const headers = ["ID", "الاسم", "الايميل", "النوع", "التاريخ","الرسالة"];
+const headers = ["ID", "الاسم", "الايميل", "النوع", "التاريخ", "الرسالة"];
 
-const submissions = [
+const submissions = ref([
   {
     id: 1,
-    name: " عرفان محمد",
+    name: "عرفان محمد",
     email: "Erfan@gmail.com",
     type: "تواصل",
     date: "2025-06-15",
     message: "ماهي مشاريعكم الجديدة",
   },
   {
-    id: 1,
-    name: "علي ",
+    id: 2,
+    name: "علي",
     email: "ali@gmail.com",
     type: "متطوع",
-    date: "2025-1-1",
+    date: "2025-01-01",
     skills: "Teaching, Cooking",
-    
+    message: "أرغب في التطوع لديكم"
   },
   {
-    id: 1,
-    name: "احمد ",
-    email: "ali@gmail.com",
+    id: 3,
+    name: "احمد",
+    email: "ahmed@gmail.com",
     type: "متبرع",
-    date: "2025-1-1",
-    skills: "Teaching, Cooking",
-    
-  },
-
-
-];
+    date: "2025-01-01",
+    amount: "500 ريال",
+    message: "تبرع شهري"
+  }
+]);
 
 const filteredSubmissions = computed(() => {
-  return submissions.filter((sub) => sub.type === activeType.value);
+  return submissions.value.filter((sub) => sub.type === activeType.value);
 });
 
 const showDetailModal = ref(false);
@@ -128,5 +127,11 @@ const selectedSubmission = ref(null);
 const viewDetails = (submission) => {
   selectedSubmission.value = submission;
   showDetailModal.value = true;
+};
+
+const deleteSubmission = (id) => {
+  if (confirm('هل أنت متأكد من حذف هذا التقديم؟')) {
+    submissions.value = submissions.value.filter(sub => sub.id !== id);
+  }
 };
 </script>

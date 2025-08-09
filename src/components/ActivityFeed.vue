@@ -19,10 +19,10 @@ export default {
   data() {
     return {
       activities: [
-        { message: 'مستخدم جديد مسجل: عرفان محمد', timestamp: '5 minutes ago' },
-        { message: 'مشروع "ورشة عمل لتمكين المرأة الريفية" محدث', timestamp: '20 minutes ago' },
-        { message: 'تم تسجيل دخول المسؤول', timestamp: '1 hour ago' },
-        { message: 'مشروع الريف الجديد', timestamp: '3 hours ago' }
+        { message: 'مستخدم جديد مسجل: عرفان محمد', timestamp: '5 قبل دقائق' },
+        { message: 'مشروع "ورشة عمل لتمكين المرأة الريفية" محدث', timestamp: '20 قبل دقائق' },
+        { message: 'تم تسجيل دخول المسؤول', timestamp: '1 منذ ساعة' },
+        { message: 'مشروع الريف الجديد', timestamp: '3 منذ ساعات' }
       ]
     }
   }

@@ -15,26 +15,37 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-const darkMode = ref(false)
+const isSearchOpen = ref(false)
+
+const toggleSearch = () => {
+  isSearchOpen.value = !isSearchOpen.value
+}
+
+const toggleLang = () => {
+  alert('Arabic language support will be added later.')
+}
+//dark mood
+const toggleTheme = () => {
+      console.log('Toggle theme clicked!')
+  const html = document.documentElement
+  const currentTheme = html.getAttribute('data-theme')
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+  html.setAttribute('data-theme', newTheme)
+  localStorage.setItem('theme', newTheme)
+
+  
+  // مؤقتاً للتجربة:
+  if(newTheme === 'dark') {
+    document.body.style.backgroundColor = '#121212'
+    document.body.style.color = '#f1f1f1'
+  } else {
+    document.body.style.backgroundColor = '#ffffff'
+    document.body.style.color = '#000000'
+  }
+}
 
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme')
-  darkMode.value = savedTheme === 'dark' || 
-    (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-  applyTheme()
+  if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme)
 })
-
-const toggleTheme = () => {
-  darkMode.value = !darkMode.value
-  applyTheme()
-  localStorage.setItem('theme', darkMode.value ? 'dark' : 'light')
-}
-
-const applyTheme = () => {
-  if (darkMode.value) {
-    document.documentElement.classList.add('dark')
-  } else {
-    document.documentElement.classList.remove('dark')
-  }
-}
 </script>

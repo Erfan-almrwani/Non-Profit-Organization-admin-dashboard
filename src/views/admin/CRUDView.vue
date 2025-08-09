@@ -10,10 +10,9 @@
       </button>
     </div>
 
-    <!-- جدول المستخدمين -->
-    <div class="bg-white rounded-lg shadow overflow-x-auto ">
+    <!-- جدول البيانات -->
+    <div class="bg-white rounded-lg shadow overflow-x-auto">
       <table class="min-w-full divide-y divide-gray-200">
-        <!-- رأس الجدول -->
         <thead class="bg-gray-700">
           <tr>
             <th v-for="header in headers" :key="header" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -22,7 +21,6 @@
             <th class="px-6 py-3 text-right">الإجراءات</th>
           </tr>
         </thead>
-        <!-- جسم الجدول -->
         <tbody class="bg-white divide-y divide-gray-200">
           <tr v-for="item in items" :key="item.id">
             <td v-for="(value, key) in item" :key="key" class="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-500">
@@ -37,10 +35,10 @@
       </table>
     </div>
 
-    <!-- مودال إضافة/تعديل المستخدم -->
+    <!-- مودال الإضافة/التعديل -->
     <Modal :isOpen="showModal" @close="showModal = false">
       <template #title>
-        {{ editingItem ? 'تعديل المستخدم' : 'إضافة مستخدم جديد' }}
+        {{ editingItem ? `تعديل ${resourceName}` : `إضافة ${resourceName} جديد` }}
       </template>
       
       <div class="space-y-4">
@@ -77,9 +75,8 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive } from 'vue'
 import Modal from '@/components/Modal.vue'
-
 
 const props = defineProps({
   resourceName: String,
@@ -87,6 +84,8 @@ const props = defineProps({
   items: Array,
   fields: Array
 })
+
+const emit = defineEmits(['update:items'])
 
 const showModal = ref(false)
 const editingItem = ref(null)
@@ -104,23 +103,28 @@ const editItem = (item) => {
 }
 
 const saveItem = () => {
-  // هنا يجب إضافة كود الاتصال بالخادم (API)
+  const updatedItems = [...props.items]
+  
   if (editingItem.value) {
-    // تحديث المستخدم الموجود
-    const index = props.items.findIndex(item => item.id === editingItem.value)
-    props.items[index] = { ...formData }
+    // تحديث العنصر الموجود
+    const index = updatedItems.findIndex(item => item.id === editingItem.value)
+    updatedItems[index] = { ...formData }
   } else {
-    // إضافة مستخدم جديد
-    const newId = Math.max(...props.items.map(item => item.id)) + 1
-    props.items.push({ id: newId, ...formData })
+    // إضافة عنصر جديد
+    const newId = updatedItems.length > 0 
+      ? Math.max(...updatedItems.map(item => item.id)) + 1 
+      : 1
+    updatedItems.push({ id: newId, ...formData })
   }
+  
+  emit('update:items', updatedItems)
   showModal.value = false
 }
 
 const deleteItem = (id) => {
-  if (confirm('هل أنت متأكد من حذف هذا المستخدم؟')) {
-    const index = props.items.findIndex(item => item.id === id)
-    props.items.splice(index, 1)
+  if (confirm(`هل أنت متأكد من حذف ${props.resourceName} هذا؟`)) {
+    const updatedItems = props.items.filter(item => item.id !== id)
+    emit('update:items', updatedItems)
   }
 }
 

@@ -1,5 +1,66 @@
 // src/router/index.js
 import { createRouter, createWebHistory } from "vue-router";
+import { reactive } from 'vue';
+
+// إنشاء حالة خارجية قابلة للتعديل
+const adminData = reactive({
+  projects: [
+    {
+      id: 1,
+      title: "دعم اطفال المدارس",
+      status: "متوقف",
+      date: "2025-06-01",
+    },
+    {
+      id: 2,
+      title: "دعم الصيادين",
+      status: "نشط",
+      date: "2025-05-15",
+    },
+  ],
+  news: [
+    {
+      id: 1,
+      title: "ورشة عمل لتمكين المرأة الريفية",
+      category: "تحديث",
+      date: "2025-06-10",
+    },
+    {
+      id: 2,
+      title: " مشروع الريف الجديد",
+      category: "اعلان",
+      date: "2025-05-28",
+    },
+  ],
+  events: [
+    {
+      id: 1,
+      name: "حفل جمع التبرعات",
+      location: "عدن",
+      date: "2024-07-15",
+    },
+    {
+      id: 2,
+      name: "تدريب المتطوعين",
+      location: "تعز",
+      date: "2024-06-20",
+    },
+  ],
+  users: [
+    {
+      id: 1,
+      name: "مدير النظام",
+      email: "admin@forall.org",
+      role: "المسؤول",
+    },
+    {
+      id: 2,
+      name: "محرر المحتوى",
+      email: "editor@forall.org",
+      role: "محرر",
+    },
+  ]
+});
 
 const routes = [
   {
@@ -14,20 +75,7 @@ const routes = [
     props: {
       resourceName: "مشروع",
       headers: ["ID", "العنوان", "الحالة", "التاريخ"],
-      items: [
-        {
-          id: 1,
-          title: "دعم اطفال المدارس",
-          status: "متوقف",
-          date: "2025-06-01",
-        },
-        {
-          id: 2,
-          title: "دعم الصيادين",
-          status: "نشط",
-          date: "2025-05-15",
-        },
-      ],
+      items: adminData.projects,
       fields: [
         { name: "title", label: "عنوان المشروع" },
         { name: "status", label: "الحالة" },
@@ -41,20 +89,7 @@ const routes = [
     props: {
       resourceName: "اخبار",
       headers: ["ID", "العنوان", "الفئة", "التاريخ"],
-      items: [
-        {
-          id: 1,
-          title: "ورشة عمل لتمكين المرأة الريفية",
-          category: "تحديث",
-          date: "2025-06-10",
-        },
-        {
-          id: 2,
-          title: " مشروع الريف الجديد",
-          category: "اعلان",
-          date: "2025-05-28",
-        },
-      ],
+      items: adminData.news,
       fields: [
         { name: "title", label: "العنوان " },
         { name: "category", label: "الفئة" },
@@ -68,20 +103,7 @@ const routes = [
     props: {
       resourceName: "فعالية",
       headers: ["ID", "الاسم", "الموقع", "التاريخ"],
-      items: [
-        {
-          id: 1,
-          name: "حفل جمع التبرعات",
-          location: "عدن",
-          date: "2024-07-15",
-        },
-        {
-          id: 2,
-          name: "تدريب المتطوعين",
-          location: "تعز",
-          date: "2024-06-20",
-        },
-      ],
+      items: adminData.events,
       fields: [
         { name: "name", label: "اسم فعالية" },
         { name: "location", label: "الموقع" },
@@ -101,20 +123,7 @@ const routes = [
     props: {
       resourceName: "مستخدم",
       headers: ["ID", "الاسم", "البريد الإلكتروني", "الدور"],
-      items: [
-        {
-          id: 1,
-          name: "مدير النظام",
-          email: "admin@forall.org",
-          role: "المسؤول",
-        },
-        {
-          id: 2,
-          name: "محرر المحتوى",
-          email: "editor@forall.org",
-          role: "محرر",
-        },
-      ],
+      items: adminData.users,
       fields: [
         { name: "name", label: "الاسم الكامل" },
         { name: "email", label: "البريد الإلكتروني", type: "email" },
@@ -122,7 +131,7 @@ const routes = [
           name: "role",
           label: "الدور",
           type: "select",
-          options: ["Administrator", "Editor", "Viewer"],
+          options: ["المسؤول", "محرر", "مشاهد"],
         },
       ],
     },

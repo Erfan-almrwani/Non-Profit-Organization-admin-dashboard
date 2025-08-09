@@ -49,10 +49,10 @@
       <h2 class="text-xl font-semibold mb-4">Backup & Export</h2>
       <div class="flex space-x-4">
         <button class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">
-          Export Content
+          تصدير المحتوى
         </button>
         <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300">
-          Download Backup
+          تحميل النسخ الاحتياطي
         </button>
       </div>
     </div>

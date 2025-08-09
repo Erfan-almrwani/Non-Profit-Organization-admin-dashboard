@@ -14,7 +14,7 @@
       <span :class="change.includes('+') ? 'text-green-500' : 'text-red-500'">
         {{ change }}
       </span>
-      <span class="text-gray-500 text-sm ml-2">from last month</span>
+      <span class="text-gray-500 text-sm ml-2">من الشهر الماضي</span>
     </div>
   </div>
 </template>

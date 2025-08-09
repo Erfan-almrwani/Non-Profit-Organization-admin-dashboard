@@ -1,10 +1,11 @@
 <!-- src/layouts/AdminLayout.vue -->
 <template>
-  <div class="flex h-screen bg-gray-50">
+  
+  <div class="flex h-screen bg-gray-50 dark:bg-black">
     <!-- Sidebar -->
     <aside class="w-64 bg-indigo-700 text-white shadow-md">
       <div class="p-4 border-b border-indigo-600">
-        <h1 class="text-xl font-bold">مؤسسة لاجل الجميع</h1>
+        <h1 class="text-xl font-bold ">مؤسسة لاجل الجميع</h1>
       </div>
       <nav class="mt-4">
         <ul>
@@ -63,7 +64,7 @@ const navItems = [
   { name: "المشاريع", path: "/admin/projects", icon: DocumentTextIcon },
   { name: "الاخبار", path: "/admin/news", icon: NewspaperIcon },
   { name: "الفعاليات", path: "/admin/events", icon: CalendarIcon },
-  { name: "Submissions", path: "/admin/submissions", icon: InboxIcon },
+  { name: " تقديم النماذج", path: "/admin/submissions", icon: InboxIcon },
   { name: "المستخدمين", path: "/admin/users", icon: UserGroupIcon },
   { name: "الاعدادات", path: "/admin/settings", icon: CogIcon },
 ];
