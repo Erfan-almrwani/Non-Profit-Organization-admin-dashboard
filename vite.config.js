@@ -7,6 +7,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/Non-Profit-Org-Site-with-tailwind-css/',
   plugins: [vue(), vueDevTools(), tailwindcss()],
   resolve: {
     alias: {
